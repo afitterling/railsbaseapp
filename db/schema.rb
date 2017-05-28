@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170211062115) do
+ActiveRecord::Schema.define(version: 20170526064024) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,35 @@ ActiveRecord::Schema.define(version: 20170211062115) do
 
   add_index "access_tokens", ["user_id"], name: "index_access_tokens_on_user_id", using: :btree
 
+  create_table "device_access_tokens", force: :cascade do |t|
+    t.string   "token"
+    t.integer  "sequence"
+    t.integer  "device_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "device_access_tokens", ["device_id"], name: "index_device_access_tokens_on_device_id", using: :btree
+  add_index "device_access_tokens", ["token"], name: "index_device_access_tokens_on_token", unique: true, using: :btree
+
+  create_table "devices", force: :cascade do |t|
+    t.integer  "last_used_key_sequence", default: -1, null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.integer  "user_id"
+  end
+
+  add_index "devices", ["user_id"], name: "index_devices_on_user_id", using: :btree
+
+  create_table "log_data", force: :cascade do |t|
+    t.integer  "device_id"
+    t.json     "payload"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "log_data", ["device_id"], name: "index_log_data_on_device_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "email",              default: "", null: false
     t.string   "encrypted_password", default: "", null: false
@@ -35,4 +64,7 @@ ActiveRecord::Schema.define(version: 20170211062115) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
 
   add_foreign_key "access_tokens", "users"
+  add_foreign_key "device_access_tokens", "devices"
+  add_foreign_key "devices", "users"
+  add_foreign_key "log_data", "devices"
 end

@@ -22,4 +22,17 @@ RSpec.describe User, type: :model do
       expect(@user).not_to be_valid
     end
   end
+
+  describe "devices" do
+    it "should respond to accessor method" do
+      expect(@user).to respond_to :devices
+    end
+
+    it "should destroy devices when user is destroyed" do
+      5.times { @user.devices.create! }
+      expect do
+        @user.destroy
+      end.to change { Device.count }.by(-@user.devices.count)
+    end
+  end
 end

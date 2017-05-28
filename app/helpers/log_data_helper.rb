@@ -1,0 +1,2 @@
+module LogDataHelper
+end
