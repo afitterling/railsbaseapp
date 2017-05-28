@@ -29,5 +29,12 @@ module Railsbaseapp
       user_name: ENV["SMTP_USER_NAME"],
       password: ENV["SMTP_PASSWORD"]
     }
+
+    config.middleware.insert_before 0, "Rack::Cors" do
+      allow do
+        origins ENV["PERMITTED_ORIGIN"]
+        resource '*', headers: :any, methods: :any
+      end
+    end
   end
 end

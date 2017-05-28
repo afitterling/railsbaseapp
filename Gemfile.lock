@@ -95,6 +95,7 @@ GEM
     parslet (1.4.0)
       blankslate (~> 2.0)
     rack (1.6.5)
+    rack-cors (0.4.1)
     rack-protection (1.5.3)
       rack
     rack-test (0.6.3)
@@ -229,6 +230,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.8.0)
   jbuilder (~> 2.0)
   jquery-rails
+  rack-cors (~> 0.4.1)
   rails (= 4.2.7.1)
   rspec-rails (~> 3.5.2)
   sass-rails (~> 5.0)
