@@ -33,4 +33,10 @@ RSpec.describe Device, type: :model do
       expect(@device).to respond_to :log_data
     end
   end
+
+  describe "user" do
+    it "should be accessible through accessor" do
+      expect(@device).to respond_to :user
+    end
+  end
 end

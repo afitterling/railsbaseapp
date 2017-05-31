@@ -6,7 +6,9 @@ Rails.application.routes.draw do
     sessions: 'users/sessions'
   }
 
-  resources :devices, only: :create
+  resources :devices, only: [:index, :create] do
+    resources :device_access_tokens, only: :index
+  end
   resources :log_data, only: [:index, :create, :show]
 
   mount Github.new => "/webhooks/github"
