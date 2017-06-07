@@ -11,5 +11,8 @@ Rails.application.routes.draw do
   end
   resources :log_data, only: [:index, :create, :show]
 
+  get '/system_config/:key', to: 'system_config#show'
+  post '/system_config/:key', to: 'system_config#update'
+
   mount Github.new => "/webhooks/github"
 end
