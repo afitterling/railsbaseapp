@@ -30,6 +30,19 @@ RSpec.describe SystemConfig, type: :model do
 
         obj = SystemConfig.find_by(key: key)
         expect(obj).not_to be_nil
+        expect(obj.value).to eq new_value
+      end
+    end
+
+    it "should be able to read and set value using subscript notation" do
+      SystemConfig::DEFAULT_VALUES.each do |key, value|
+        expect(SystemConfig[key]).to eq value
+        new_value = "hello-#{value}"
+        SystemConfig[key] = new_value
+        expect(SystemConfig[key]).to eq new_value
+        obj = SystemConfig.find_by(key: key)
+        expect(obj).not_to be_nil
+        expect(obj.value).to eq new_value
       end
     end
   end

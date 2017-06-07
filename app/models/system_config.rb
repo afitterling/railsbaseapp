@@ -23,4 +23,14 @@ class SystemConfig < ActiveRecord::Base
       self.find_by(key: property)&.value || DEFAULT_VALUES[property]
     end
   end
+
+  def self.[](key)
+    self.find_by(key: key)&.value || DEFAULT_VALUES[key.to_s]
+  end
+
+  def self.[]=(key, value)
+    config = self.find_or_create_by(key: key)
+    config.value = value
+    config.save
+  end
 end
