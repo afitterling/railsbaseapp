@@ -45,5 +45,13 @@ RSpec.describe SystemConfig, type: :model do
         expect(obj.value).to eq new_value
       end
     end
+
+    it "should have convenient method enable_key_rotation?" do
+      expect(SystemConfig).to respond_to(:enable_key_rotation?)
+      SystemConfig.key_rotation = "true"
+      expect(SystemConfig.enable_key_rotation?).to eq true
+      SystemConfig.key_rotation = "false"
+      expect(SystemConfig.enable_key_rotation?).to eq false
+    end
   end
 end

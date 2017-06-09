@@ -33,4 +33,8 @@ class SystemConfig < ActiveRecord::Base
     config.value = value
     config.save
   end
+
+  def self.enable_key_rotation?
+    key_rotation == "true"
+  end
 end
