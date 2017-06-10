@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   get '/system_config/:key', to: 'system_config#show'
   post '/system_config/:key', to: 'system_config#update'
+  get '/profile', to: 'users#profile', as: :user_profile
 
   mount Github.new => "/webhooks/github"
 end
