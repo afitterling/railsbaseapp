@@ -7,14 +7,28 @@ class DevicesController < ApplicationController
   end
 
   def create
-    @device = current_user.devices.create
-    @tokens = (0...KEYS_COUNT).map do |sequence|
-      @device.device_access_tokens.create(sequence: sequence)
+    @device = current_user.devices.build(device_parameters)
+    if @device.key_rotation_enabled.nil?
+      @device.key_rotation_enabled = SystemConfig.enable_key_rotation?
     end
 
-    render json: {
-      access_tokens: @tokens,
-      device: @device
-    }
+    if @device.save
+      @tokens = (0...KEYS_COUNT).map do |sequence|
+        @device.device_access_tokens.create(sequence: sequence)
+      end
+
+      render json: {
+        access_tokens: @tokens,
+        device: @device
+      }
+    else
+      render json: {errors: @device.errors.full_messages}, status: :unprocessable_entity
+    end
+  end
+
+  private
+
+  def device_parameters
+    params.permit(:key_rotation_enabled)
   end
 end

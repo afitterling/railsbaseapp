@@ -10,7 +10,8 @@ module Sessions
 
     device_access_token = DeviceAccessToken.find_by(token: raw_access_token)
     if device_access_token
-      unless SystemConfig.enable_key_rotation? && device_access_token != device_access_token.device.current_valid_token
+      device = device_access_token.device
+      unless device.key_rotation_enabled? && device_access_token != device.current_valid_token
         device_access_token.consume
         @access_token = device_access_token
       end

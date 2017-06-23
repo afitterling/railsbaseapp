@@ -10,7 +10,8 @@ RSpec.describe "KeyRotation", type: :request do
 
   describe "enabled" do
     before(:each) do
-      SystemConfig.key_rotation = "true"
+      @device.key_rotation_enabled = true
+      @device.save!
     end
 
     it "should increment the device last_used_key_sequence" do
@@ -46,7 +47,8 @@ RSpec.describe "KeyRotation", type: :request do
 
   describe "disabled" do
     before(:each) do
-      SystemConfig.key_rotation = "false"
+      @device.key_rotation_enabled = false
+      @device.save!
     end
 
     it "should accept any key" do
