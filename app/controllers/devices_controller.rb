@@ -1,5 +1,8 @@
 class DevicesController < ApplicationController
   before_action :require_user_access_token
+  before_action :assign_device, only: :update
+  before_action :ensure_authorized_user, only: :update
+
   KEYS_COUNT = 10
 
   def index
@@ -7,7 +10,7 @@ class DevicesController < ApplicationController
   end
 
   def create
-    @device = current_user.devices.build(device_parameters)
+    @device = current_user.devices.build(device_params)
     if @device.key_rotation_enabled.nil?
       @device.key_rotation_enabled = SystemConfig.enable_key_rotation?
     end
@@ -26,9 +29,27 @@ class DevicesController < ApplicationController
     end
   end
 
+  def update
+    if @device.update(device_params)
+      render json: @device
+    else
+      render json: {errors: @device.errors.full_messages}, status: :unprocessable_entity
+    end
+  end
+
   private
 
-  def device_parameters
+  def device_params
     params.permit(:key_rotation_enabled)
+  end
+
+  def assign_device
+    @device = Device.find(params[:id])
+  end
+
+  def ensure_authorized_user
+    unless @device.user == current_user
+      render json: {errors: ["Not allowed to access this device"]}, status: :forbidden
+    end
   end
 end
