@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :device_access_tokens, only: :index
   end
   resources :log_data, only: [:index, :create, :show]
+  resources :aggregate_log_data, only: [:index]
 
   get '/system_config/:key', to: 'system_config#show'
   post '/system_config/:key', to: 'system_config#update'
