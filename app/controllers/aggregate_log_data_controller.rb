@@ -5,7 +5,7 @@ class AggregateLogDataController < ApplicationController
     @devices = current_user.devices.where(id: device_ids)
 
     response_hash = @devices.reduce({}) do |hash, device|
-      hash[device.id] = device.log_data.order(id: :desc).paginate(page: params[:page], per_page: params[:limit])
+      hash[device.id] = device.log_data.order(id: :asc).paginate(page: params[:page], per_page: params[:limit])
       hash
     end
 

@@ -3,7 +3,7 @@ class DeviceAccessTokensController < ApplicationController
   before_action :assign_device
 
   def index
-    @access_tokens = @device.device_access_tokens.order(id: :desc).paginate(page: params[:page], per_page: params[:limit])
+    @access_tokens = @device.device_access_tokens.order(id: :asc).paginate(page: params[:page], per_page: params[:limit])
     render json: @access_tokens
   end
 

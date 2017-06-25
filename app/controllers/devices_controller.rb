@@ -6,7 +6,7 @@ class DevicesController < ApplicationController
   KEYS_COUNT = 10
 
   def index
-    @devices = current_user.devices.order(id: :desc).paginate(page: params[:page], per_page: params[:limit])
+    @devices = current_user.devices.order(id: :asc).paginate(page: params[:page], per_page: params[:limit])
     render json: @devices
   end
 
