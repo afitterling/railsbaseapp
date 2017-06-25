@@ -2,7 +2,8 @@ class LogDataController < ApplicationController
   before_action :require_device_access_token
 
   def index
-    render json: current_device.log_data
+    @log_data = current_device.log_data.order(id: :desc).paginate(page: params[:page], per_page: params[:limit])
+    render json: @log_data
   end
 
   def create

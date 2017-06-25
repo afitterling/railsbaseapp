@@ -36,6 +36,7 @@ gem 'torquebox-server', '3.2.0'
 gem 'devise'
 gem 'sinatra', '1.4.8'
 gem 'rack-cors', '~> 0.4.1'
+gem 'will_paginate', '~> 3.1.6'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

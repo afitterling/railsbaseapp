@@ -3,12 +3,9 @@ class AggregateLogDataController < ApplicationController
 
   def index
     @devices = current_user.devices.where(id: device_ids)
-    @log_data = LogDatum.where(device: @devices)
 
-    response_hash = @log_data.reduce({}) do |hash, log_datum|
-      arr = hash.fetch(log_datum.device_id, [])
-      arr << log_datum
-      hash[log_datum.device_id] = arr
+    response_hash = @devices.reduce({}) do |hash, device|
+      hash[device.id] = device.log_data.order(id: :desc).paginate(page: params[:page], per_page: params[:limit])
       hash
     end
 
