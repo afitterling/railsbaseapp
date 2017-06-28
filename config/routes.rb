@@ -9,6 +9,11 @@ Rails.application.routes.draw do
   resources :devices, only: [:index, :create, :update] do
     resources :device_access_tokens, only: :index
   end
+
+  resources :devices, path: 'streams', only: [:index, :create, :update] do
+    resources :device_access_tokens, only: :index
+  end
+
   resources :log_data, only: [:index, :create, :show]
   resources :aggregate_log_data, only: [:index]
 
