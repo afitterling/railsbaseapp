@@ -10,26 +10,6 @@ class DevicesController < ApplicationController
     render json: @devices.reverse
   end
 
-  def create
-    @device = current_user.devices.build(device_params)
-    if @device.key_rotation_enabled.nil?
-      @device.key_rotation_enabled = SystemConfig.enable_key_rotation?
-    end
-
-    if @device.save
-      @tokens = (0...KEYS_COUNT).map do |sequence|
-        @device.device_access_tokens.create(sequence: sequence)
-      end
-
-      render json: {
-        access_tokens: @tokens,
-        device: @device
-      }
-    else
-      render json: {errors: @device.errors.full_messages}, status: :unprocessable_entity
-    end
-  end
-
   def update
     if @device.update(device_params)
       render json: @device
