@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "DeviceRegistration", type: :request do
   before(:each) do
     @user = create(:user)
-    @access_token =create(:access_token, user: @user)
+    @access_token = create(:access_token, user: @user)
   end
 
   paths = ["/devices", "/streams", "/users/streams"]
