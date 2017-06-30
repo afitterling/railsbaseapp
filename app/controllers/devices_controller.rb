@@ -41,7 +41,7 @@ class DevicesController < ApplicationController
   private
 
   def device_params
-    params.permit(:key_rotation_enabled)
+    params.permit(:name, :key_rotation_enabled)
   end
 
   def assign_device

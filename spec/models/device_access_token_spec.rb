@@ -10,7 +10,7 @@ RSpec.describe DeviceAccessToken, type: :model do
 
   describe "consume" do
     it "should update device last_used_key_sequence" do
-      device = Device.create!
+      device = create(:device)
       token1 = device.device_access_tokens.create!(sequence: 1)
       token2 = device.device_access_tokens.create!(sequence: 2)
 

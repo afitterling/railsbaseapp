@@ -31,20 +31,22 @@ RSpec.describe DevicesController, type: :controller do
       request.headers.merge!("X-Access-Token" => @access_token.token)
 
       expect do
-        post :create, {key_rotation_enabled: false}
+        post :create, {key_rotation_enabled: false, name: 'yay'}
         expect(response).to have_http_status(:ok)
       end.to change { Device.count }.by(1)
 
       device = Device.find(json_body["device"]["id"])
       expect(device.key_rotation_enabled?).to eq false
+      expect(device.name).to eq 'yay'
 
       expect do
-        post :create, {key_rotation_enabled: true}
+        post :create, {key_rotation_enabled: true, name: 'foo'}
         expect(response).to have_http_status(:ok)
       end.to change { Device.count }.by(1)
 
       device = Device.find(json_body["device"]["id"])
       expect(device.key_rotation_enabled?).to eq true
+      expect(device.name).to eq 'foo'
     end
 
     it 'should use the global default key rotation setting' do

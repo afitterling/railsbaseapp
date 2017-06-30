@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170623022304) do
+ActiveRecord::Schema.define(version: 20170630131227) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,9 +42,12 @@ ActiveRecord::Schema.define(version: 20170623022304) do
     t.datetime "updated_at",                          null: false
     t.integer  "user_id"
     t.boolean  "key_rotation_enabled"
+    t.string   "name"
+    t.string   "uuid"
   end
 
   add_index "devices", ["user_id"], name: "index_devices_on_user_id", using: :btree
+  add_index "devices", ["uuid"], name: "index_devices_on_uuid", unique: true, using: :btree
 
   create_table "log_data", force: :cascade do |t|
     t.integer  "device_id"

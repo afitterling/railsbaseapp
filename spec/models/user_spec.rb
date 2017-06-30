@@ -29,7 +29,7 @@ RSpec.describe User, type: :model do
     end
 
     it "should destroy devices when user is destroyed" do
-      5.times { @user.devices.create! }
+      5.times { create(:device, user: @user) }
       expect do
         @user.destroy
       end.to change { Device.count }.by(-@user.devices.count)
