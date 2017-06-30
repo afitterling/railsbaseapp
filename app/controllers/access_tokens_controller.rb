@@ -1,5 +1,5 @@
-class Users::SessionsController < ApplicationController
-  before_action :require_access_token, only: :destroy
+class AccessTokensController < ApplicationController
+  before_action :require_user_access_token, only: [:destroy]
 
   def create
     user = User.find_by(email: params[:email])
