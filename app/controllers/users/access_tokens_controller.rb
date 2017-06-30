@@ -1,4 +1,4 @@
-class AccessTokensController < ApplicationController
+class Users::AccessTokensController < ApplicationController
   before_action :require_user_access_token, only: [:destroy]
 
   def create

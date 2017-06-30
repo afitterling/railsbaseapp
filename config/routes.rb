@@ -2,8 +2,10 @@ require_relative "../webhooks/github"
 
 Rails.application.routes.draw do
   resources :users, only: [:create]
-  post '/users/sign_in', to: 'access_tokens#create'
-  delete '/users/sign_out', to: 'access_tokens#destroy'
+
+  namespace :users do
+    resource :access_token, only: [:create, :destroy]
+  end
 
   resources :devices, only: [:index, :create, :update] do
     resources :device_access_tokens, only: :index
@@ -21,4 +23,8 @@ Rails.application.routes.draw do
   get '/profile', to: 'users#profile', as: :user_profile
 
   mount Github.new => "/webhooks/github"
+
+  # Deprecated routes
+  post '/users/sign_in', to: 'users/access_tokens#create'
+  delete '/users/sign_out', to: 'users/access_tokens#destroy'
 end
