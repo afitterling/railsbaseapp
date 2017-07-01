@@ -8,6 +8,12 @@ Rails.application.routes.draw do
     resources :streams, only: [:index, :create, :update]
   end
 
+  namespace :streams do
+    resources :log_data, only: [] do
+      resources :images, only: [:index, :create]
+    end
+  end
+
   resources :devices, only: [] do
     resources :device_access_tokens, only: :index
   end

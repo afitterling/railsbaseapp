@@ -5,4 +5,8 @@ class Image < ActiveRecord::Base
 
   validates_attachment_presence :image
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
+
+  def image_url
+    image.url
+  end
 end
