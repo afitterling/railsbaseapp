@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170630131227) do
+ActiveRecord::Schema.define(version: 20170701060806) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,18 @@ ActiveRecord::Schema.define(version: 20170630131227) do
   add_index "devices", ["user_id"], name: "index_devices_on_user_id", using: :btree
   add_index "devices", ["uuid"], name: "index_devices_on_uuid", unique: true, using: :btree
 
+  create_table "images", force: :cascade do |t|
+    t.integer  "log_datum_id"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "images", ["log_datum_id"], name: "index_images_on_log_datum_id", using: :btree
+
   create_table "log_data", force: :cascade do |t|
     t.integer  "device_id"
     t.json     "payload"
@@ -79,5 +91,6 @@ ActiveRecord::Schema.define(version: 20170630131227) do
   add_foreign_key "access_tokens", "users"
   add_foreign_key "device_access_tokens", "devices"
   add_foreign_key "devices", "users"
+  add_foreign_key "images", "log_data"
   add_foreign_key "log_data", "devices"
 end

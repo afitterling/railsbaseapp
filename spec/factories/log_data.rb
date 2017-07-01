@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :log_datum do
-    device nil
-    payload ""
+    device
+    payload {{hello: "world"}}
   end
 end
