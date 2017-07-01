@@ -1,6 +1,6 @@
 FROM jruby:9.1.7.0
 
-RUN apt-get -y update && apt-get -y install imagemagick
+RUN apt-get -y update && apt-get -y install imagemagick file
 
 RUN mkdir /rails
 WORKDIR /rails
