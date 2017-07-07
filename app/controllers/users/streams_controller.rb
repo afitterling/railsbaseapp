@@ -41,7 +41,7 @@ class Users::StreamsController < ApplicationController
   private
 
   def device_params
-    params.permit(:name, :key_rotation_enabled)
+    params.permit(:name, :key_rotation_enabled, :linked)
   end
 
   def assign_device
