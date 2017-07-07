@@ -2,6 +2,7 @@ class Device < ActiveRecord::Base
   has_many :device_access_tokens, dependent: :destroy
   has_many :log_data, dependent: :destroy
   belongs_to :user
+  has_many :webhooks, dependent: :destroy
 
   validates :uuid, presence: true, uniqueness: true
 

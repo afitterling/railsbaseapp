@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170707145034) do
+ActiveRecord::Schema.define(version: 20170707150511) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,9 +89,20 @@ ActiveRecord::Schema.define(version: 20170707145034) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
 
+  create_table "webhooks", force: :cascade do |t|
+    t.string   "url",                       null: false
+    t.boolean  "active",     default: true, null: false
+    t.integer  "device_id"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "webhooks", ["device_id"], name: "index_webhooks_on_device_id", using: :btree
+
   add_foreign_key "access_tokens", "users"
   add_foreign_key "device_access_tokens", "devices"
   add_foreign_key "devices", "users"
   add_foreign_key "images", "log_data"
   add_foreign_key "log_data", "devices"
+  add_foreign_key "webhooks", "devices"
 end

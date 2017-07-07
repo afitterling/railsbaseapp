@@ -62,4 +62,10 @@ RSpec.describe Device, type: :model do
       expect(@device).to respond_to :user
     end
   end
+
+  describe "webhooks" do
+    it "should be accessible through accessor" do
+      expect(@device).to respond_to :webhooks
+    end
+  end
 end
