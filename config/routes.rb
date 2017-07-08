@@ -5,7 +5,10 @@ Rails.application.routes.draw do
 
   namespace :users do
     resource :access_token, only: [:create, :destroy]
-    resources :streams, only: [:index, :create, :update]
+    resources :streams, only: [:index, :create, :update] do
+      resources :webhooks, only: [:create]
+    end
+    resources :webhooks, only: [:update]
   end
 
   namespace :streams do
