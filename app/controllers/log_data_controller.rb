@@ -1,4 +1,6 @@
 class LogDataController < ApplicationController
+  include WebhooksExecutor
+
   before_action :require_device_access_token
 
   def index
@@ -10,6 +12,10 @@ class LogDataController < ApplicationController
     @log_datum = current_device.log_data.build(payload: params[:payload])
 
     if @log_datum.save
+      current_device.webhooks.where(active: true).each do |webhook|
+        execute_webhook(webhook, WebhooksExecutor::Events::LOG_DATA_CREATED, @log_datum)
+      end
+
       render json: @log_datum
     else
       render json: {errors: @log_datum.errors.full_messages}, status: :unprocessable_entity

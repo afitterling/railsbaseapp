@@ -11,7 +11,7 @@ RSpec.describe "WebhookRegistration", type: :request do
 
     it "should update the webhook with valid params" do
       put "/users/webhooks/#{@webhook.id}.json",
-          {webhook: {url: "http://yay.com/webhook.json"}},
+          {url: "http://yay.com/webhook.json"},
           {"X-Access-Token" => @access_token.token}
       expect(response).to have_http_status(:ok)
 
@@ -22,7 +22,7 @@ RSpec.describe "WebhookRegistration", type: :request do
     it "should not update with invalid params" do
       url = @webhook.url
       put "/users/webhooks/#{@webhook.id}.json",
-          {webhook: {url: ""}},
+          {url: ""},
           {"X-Access-Token" => @access_token.token}
       expect(response).to have_http_status(:unprocessable_entity)
 
@@ -33,7 +33,7 @@ RSpec.describe "WebhookRegistration", type: :request do
     it "should require user access token" do
       url = @webhook.url
       put "/users/webhooks/#{@webhook.id}.json",
-          {webhook: {url: "http://yay.com/webhook.json"}}
+          {url: "http://yay.com/webhook.json"}
       expect(response).to have_http_status(:unauthorized)
 
       @webhook.reload
@@ -47,7 +47,7 @@ RSpec.describe "WebhookRegistration", type: :request do
 
       url = @webhook.url
       put "/users/webhooks/#{@webhook.id}.json",
-          {webhook: {url: "http://yay.com/webhook.json"}},
+          {url: "http://yay.com/webhook.json"},
           {"X-Access-Token" => @access_token.token}
       expect(response).to have_http_status(:forbidden)
 

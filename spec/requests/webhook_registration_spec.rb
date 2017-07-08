@@ -11,7 +11,7 @@ RSpec.describe "WebhookRegistration", type: :request do
     it "should create a webhook with valid params" do
       expect do
         post "/users/streams/#{@device.id}/webhooks",
-             {webhook: {url: "http://example.com/foo.json"}},
+             {url: "http://example.com/foo.json"},
              {"X-Access-Token" => @access_token.token}
         expect(response).to have_http_status(:ok)
       end.to change { Webhook.count }.by(1)
@@ -20,7 +20,7 @@ RSpec.describe "WebhookRegistration", type: :request do
     it "should not create a webhook without a valid params" do
       expect do
         post "/users/streams/#{@device.id}/webhooks",
-             {webhook: {url: ""}},
+             {url: ""},
              {"X-Access-Token" => @access_token.token}
         expect(response).to have_http_status(:unprocessable_entity)
       end.not_to change { Webhook.count }
@@ -29,7 +29,7 @@ RSpec.describe "WebhookRegistration", type: :request do
     it "should require a user access token" do
       expect do
         post "/users/streams/#{@device.id}/webhooks",
-             {webhook: {url: "http://example.com/foo.json"}}
+             {url: "http://example.com/foo.json"}
         expect(response).to have_http_status(:unauthorized)
       end.not_to change { Webhook.count }
     end
@@ -41,7 +41,7 @@ RSpec.describe "WebhookRegistration", type: :request do
 
       expect do
         post "/users/streams/#{@device.id}/webhooks",
-             {webhook: {url: "http://example.com/foo.json"}},
+             {url: "http://example.com/foo.json"},
              {"X-Access-Token" => @access_token.token}
         expect(response).to have_http_status(:forbidden)
       end.not_to change { Webhook.count }
