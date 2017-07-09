@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     resources :streams, only: [:index, :create, :update] do
       resources :webhooks, only: [:create]
     end
-    resources :webhooks, only: [:update]
+    resources :webhooks, only: [:index, :update, :destroy]
   end
 
   namespace :streams do

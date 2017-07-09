@@ -17,4 +17,11 @@ RSpec.describe Webhook, type: :model do
       expect(@webhook).not_to be_valid
     end
   end
+
+  describe "device" do
+    it "should be present" do
+      @webhook.device = nil
+      expect(@webhook).not_to be_valid
+    end
+  end
 end
