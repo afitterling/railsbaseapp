@@ -35,7 +35,7 @@ class Users::WebhooksController < ApplicationController
   private
 
   def webhook_params
-    params.permit(:url, :active)
+    params.permit(:url, :active, :secret)
   end
 
   def assign_device

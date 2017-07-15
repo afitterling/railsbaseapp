@@ -6,6 +6,7 @@ module WebhooksExecutor
 
   def execute_webhook(webhook, event, payload)
     request_body = {
+      secret: webhook.secret,
       event: event,
       data: payload
     }
