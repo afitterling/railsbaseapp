@@ -5,7 +5,7 @@ class LogDataController < ApplicationController
 
   def index
     @log_data = current_device.log_data.order(id: :desc).paginate(page: params[:page], per_page: params[:limit])
-    response.headers['X-Total-Count'] = current_device.log_data.count
+    response.headers['X-Total-Count'] = current_device.log_data.count.to_s
     render json: @log_data.reverse
   end
 
