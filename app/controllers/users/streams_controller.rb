@@ -1,7 +1,7 @@
 class Users::StreamsController < ApplicationController
   before_action :require_user_access_token
-  before_action :assign_device, only: :update
-  before_action :ensure_authorized_user, only: :update
+  before_action :assign_device, only: [:update, :show]
+  before_action :ensure_authorized_user, only: [:update, :show]
 
   KEYS_COUNT = 10
 
@@ -28,6 +28,10 @@ class Users::StreamsController < ApplicationController
     else
       render json: {errors: @device.errors.full_messages}, status: :unprocessable_entity
     end
+  end
+
+  def show
+    render json: @device
   end
 
   def update

@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   namespace :users do
     resource :access_token, only: [:create, :destroy]
-    resources :streams, only: [:index, :create, :update] do
+    resources :streams, only: [:index, :create, :show, :update] do
       resources :webhooks, only: [:create]
     end
     resources :webhooks, only: [:index, :update, :destroy]
@@ -38,6 +38,6 @@ Rails.application.routes.draw do
   post '/users/sign_in', to: 'users/access_tokens#create'
   delete '/users/sign_out', to: 'users/access_tokens#destroy'
 
-  resources :devices, only: [:index, :create, :update], controller: 'users/streams'
-  resources :devices, path: 'streams', only: [:index, :create, :update], controller: 'users/streams'
+  resources :devices, only: [:index, :create, :show, :update], controller: 'users/streams'
+  resources :devices, path: 'streams', only: [:index, :create, :show, :update], controller: 'users/streams'
 end
