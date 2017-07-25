@@ -33,7 +33,7 @@ module Railsbaseapp
     config.middleware.insert_before 0, "Rack::Cors" do
       allow do
         origins ENV["PERMITTED_ORIGIN"]
-        resource '*', headers: :any, methods: :any
+        resource '*', headers: :any, methods: :any, expose: ['X-Total-Count']
       end
     end
   end
