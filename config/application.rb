@@ -30,10 +30,12 @@ module Railsbaseapp
       password: ENV["SMTP_PASSWORD"]
     }
 
-    config.middleware.insert_before 0, "Rack::Cors" do
-      allow do
-        origins ENV["PERMITTED_ORIGIN"]
-        resource '*', headers: :any, methods: :any, expose: ['X-Total-Count']
+    if ENV["PERMITTED_ORIGIN"]
+      config.middleware.insert_before 0, "Rack::Cors" do
+        allow do
+          origins ENV["PERMITTED_ORIGIN"]
+          resource '*', headers: :any, methods: :any, expose: ['X-Total-Count']
+        end
       end
     end
   end
