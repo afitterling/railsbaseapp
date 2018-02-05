@@ -5,7 +5,7 @@ class Users::AccessTokensController < ApplicationController
     user = User.find_by(email: params[:email])
 
     if user && user.valid_password?(params[:password])
-      access_token = user.access_tokens.create
+      access_token = user.access_tokens.create(read_only: params[:read_only] || false)
       render json: {access_token: access_token}
     else
       render json: {errors: ["Email and/or password are invalid"]}, status: :forbidden
