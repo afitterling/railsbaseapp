@@ -22,6 +22,6 @@ RSpec.describe LogDataController, type: :controller do
     response_ids = json_body.map { |x| x["id"] }
     expect(response_ids).to eq expected_ids
 
-    expect(response.headers['X-Total-Count']).to eq @device.log_data.count
+    expect(response.headers['X-Total-Count']).to eq @device.log_data.count.to_s
   end
 end
