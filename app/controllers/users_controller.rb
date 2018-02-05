@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :require_user_access_token, only: [:profile]
+  before_action :require_read_write_user_access_token, only: [:profile]
 
   def create
     user = User.new(user_params)

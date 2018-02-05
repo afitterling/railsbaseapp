@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe AggregateLogDataController, type: :controller do
   describe 'index' do
     before(:each) do
-      @access_token = create(:access_token)
+      @access_token = create(:access_token, read_only: true)
       @user = @access_token.user
       @devices = 10.times.map { create(:device, user: @user) }
       @log_data = @devices.map { |device| create(:log_datum, device: device, payload: {hello: "device_#{device.id}"}) }

@@ -1,5 +1,5 @@
 class Users::WebhooksController < ApplicationController
-  before_action :require_user_access_token
+  before_action :require_read_write_user_access_token
   before_action :assign_device, only: [:create]
   before_action :assign_webhook, only: [:update, :destroy]
 

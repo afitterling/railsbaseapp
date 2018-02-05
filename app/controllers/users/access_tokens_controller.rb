@@ -1,5 +1,5 @@
 class Users::AccessTokensController < ApplicationController
-  before_action :require_user_access_token, only: [:destroy]
+  before_action :require_read_write_user_access_token, only: [:destroy]
 
   def create
     user = User.find_by(email: params[:email])

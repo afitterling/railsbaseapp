@@ -1,5 +1,5 @@
 class Users::StreamsController < ApplicationController
-  before_action :require_user_access_token
+  before_action :require_read_write_user_access_token
   before_action :assign_device, only: [:update, :show]
   before_action :ensure_authorized_user, only: [:update, :show]
 

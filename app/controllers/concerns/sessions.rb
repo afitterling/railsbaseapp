@@ -28,9 +28,16 @@ module Sessions
     access_token && access_token.respond_to?(:device) && access_token.device
   end
 
-  def require_access_token
+  def require_read_write_access_token
     return render_no_access_token unless raw_access_token
     return render_invalid_access_token unless access_token
+    return render_invalid_access_token if access_token.respond_to?(:read_only?) && access_token.read_only?
+  end
+
+  def require_read_write_user_access_token
+    return render_no_access_token unless raw_access_token
+    return render_invalid_access_token unless current_user
+    return render_invalid_access_token if access_token.read_only?
   end
 
   def require_user_access_token
