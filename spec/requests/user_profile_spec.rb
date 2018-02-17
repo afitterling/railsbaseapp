@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe "UserProfile", type: :request do
   before(:each) do
-    @access_token = create(:access_token)
-    @user = @access_token.user
+    @user = create(:user)
+    @access_token = create(:access_token, user: @user)
+    @read_only_access_token = create(:access_token, user: @user, read_only: true)
   end
 
   describe "show" do
@@ -14,6 +15,11 @@ RSpec.describe "UserProfile", type: :request do
       fake_token = "walala"
       expect(AccessToken.find_by(token: fake_token)).to eq nil
       get user_profile_path, nil, "X-Access-Token" => fake_token
+      expect(response).to have_http_status(:unauthorized)
+    end
+
+    it "should respond with unauthorized with a read-only token" do
+      get user_profile_path, nil, "X-Access-Token" => @read_only_access_token.token
       expect(response).to have_http_status(:unauthorized)
     end
 
