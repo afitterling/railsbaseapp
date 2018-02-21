@@ -1,3 +1,4 @@
-# railsbaseapp
-basic rails scaffold with basic features for reuse in upstream manner for other projects
+# data upstream service 
+see the api docs in the other repo
+
 
