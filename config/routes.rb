@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   resources :users, only: [:create]
 
   namespace :users do
-    resource :access_token, only: [:create, :destroy]
+    resource :access_token, only: [:create, :destroy] do
+      get 'read_only', to: 'access_tokens/read_only#index'
+    end
     resources :streams, only: [:index, :create, :show, :update] do
       resources :webhooks, only: [:create]
     end
