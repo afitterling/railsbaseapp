@@ -17,5 +17,10 @@ RSpec.describe "User read-only tokens" do
       expect(json_body.length).to eq 1
       expect(json_body[0]["id"]).to eq @read_only_access_token.id
     end
+
+    it 'should not accept a read-only token' do
+      get "/users/access_token/read_only", nil, "X-Access-Token" => @read_only_access_token.token
+      expect(response).to have_http_status(:unauthorized)
+    end
   end
 end
